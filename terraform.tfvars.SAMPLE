@@ -1,2 +1,0 @@
-do_token = "YourBigLongStringOfHexDigitsGoesHere"
-ssh_key = "YourSSHKeyFingerprintGoesHere"
