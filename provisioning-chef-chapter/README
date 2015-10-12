@@ -1,0 +1,46 @@
+NOTES:
+
+- Chef default seems to be v12.  On the master we grab v11, so we need
+  v11 on the workstation too.
+
+  On page 64, instead of using curl to grab the script and feed it to
+  bash, save it to a file and call it with "-v 11".  See tasty.cf.
+  There's probably some way to pass a command line arg to bash and have it
+  passed to the script that's being read from stdin, but...
+
+- nginx seems to have changed a bit.  Stuff is served from
+  `/usr/share/nginx/html`, not `.../www`.
+
+  You'll need to touch up
+  `/root/chef-repo/cookbooks/taste/recipes/default.rb` accordingly.
+
+- This may or may not be a problem for you, depending on how you name
+  your machines and what you put into your hosts files.
+
+  Make sure you are consistent in naming your machines.  My terraform
+  config (and some of the docs) name the systems as e.g. `puppy`, but
+  I've been putting puppy.dev in the hosts file.
+
+  The master seems to configure itself based on its hostname, and
+  since mine was 'master', not 'master.dev' I had to run around adding
+  an entry for 'master' in the /etc/hosts file along with the
+  'master.dev' line.
+
+
+# Some odds and ends commands that were useful.
+
+terraform show | tail -4| perl ../hosts.pl > hosts
+cat hosts
+sudo vi /etc/hosts
+vi ~/.ssh/known_hosts
+for h in kitty.dev master.dev puppy.dev workstation.dev; do cat hosts | ssh -i ~/.ssh/id_rsa root@$h "cat >> /etc/hosts"; done
+
+ssh-keygen -t rsa -f ~/.ssh/tasty
+scp ~/.ssh/tasty* root@workstation.dev:.ssh
+scp ~/.ssh/tasty* root@master.dev:.ssh
+ssh root@workstation.dev "chmod 600 .ssh/tasty*"
+ssh root@master.dev "chmod 600 .ssh/tasty*"
+
+scp "root@master.dev:/etc/chef-server/*.pem" .
+scp *pem root@workstation.dev:chef-repo/.chef
+
