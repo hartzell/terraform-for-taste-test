@@ -33,21 +33,21 @@ provider "digitalocean" {
 #   https://cloud.digitalocean.com/settings/security
 #
 resource "digitalocean_droplet" "master" {
-  name = "master"
+  name = "master.dev"
   image = "${var.image}"
   region = "${var.region}"
   size = "${var.size}"
   ssh_keys = ["${var.ssh_key}"]
 }
 resource "digitalocean_droplet" "kitty" {
-  name = "kitty"
+  name = "kitty.dev"
   image = "${var.image}"
   region = "${var.region}"
   size = "${var.size}"
   ssh_keys = ["${var.ssh_key}"]
 }
 resource "digitalocean_droplet" "puppy" {
-  name = "puppy"
+  name = "puppy.dev"
   image = "${var.image}"
   region = "${var.region}"
   size = "${var.size}"
