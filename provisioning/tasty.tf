@@ -54,12 +54,12 @@ resource "digitalocean_droplet" "puppy" {
   ssh_keys = ["${var.ssh_key}"]
 }
 
-output "master ip" {
+output "master.dev ip" {
     value = "${digitalocean_droplet.master.ipv4_address}"
 }
-output "kitty ip" {
+output "kitty.dev ip" {
     value = "${digitalocean_droplet.kitty.ipv4_address}"
 }
-output "puppy ip" {
+output "puppy.dev ip" {
     value = "${digitalocean_droplet.puppy.ipv4_address}"
 }
