@@ -40,9 +40,10 @@ resource "digitalocean_droplet" "master" {
   ssh_keys = ["${var.ssh_key}"]
   provisioner "remote-exec" {
     inline = [
-      "wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chef-server_11.0.8-1.ubuntu.12.04_amd64.deb",
-      "dpkg -i chef-server_11.0.8-1.ubuntu.12.04_amd64.deb",
-      "chef-server-ctl reconfigure",
+      # this is for ubuntu 12, what's the 14 equivalent?
+      # "wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chef-server_11.0.8-1.ubuntu.12.04_amd64.deb",
+      # "dpkg -i chef-server_11.0.8-1.ubuntu.12.04_amd64.deb",
+      # "chef-server-ctl reconfigure",
     ]
     connection {
       user = "root"
